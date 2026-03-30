@@ -1,4 +1,5 @@
 //Will print out the home page of the app
+//test
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react';
 import Page from './Page';
