@@ -6,17 +6,25 @@ const Page = ({ message, buttons }) => {
     //Will be used to navigate to other pages
     let navigate = useNavigate();
 
-    //Will navigate to the specified page upon the arrow being clicked
-    const handleClick = (page) => {
-        console.log("test")
-        navigate(page)
+    function NavButton({ page, children }) {
+        return (
+            <button onClick={() => navigate(page)}>
+                {children}
+            </button>
+        );
     }
 
     return(
         <div>
             <header className='header'>{message}</header>
             {buttons.map(button => (
-                <button key={button.id} onClick={handleClick(button.page)}>{button.message}</button>
+                <>
+                    <NavButton key={button.id} page={button.page}>
+                        {button.message}
+                    </NavButton>
+                    <br/>
+                    <br/>
+                </>
             ))}
         </div>
     )

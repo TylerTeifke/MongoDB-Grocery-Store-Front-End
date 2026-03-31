@@ -1,29 +1,18 @@
 //Will print out the home page of the app
-//test
-import { useNavigate } from 'react-router-dom'
-import { useState } from 'react';
 import Page from './Page';
 
 const Home = () => {
-    //Will be used to navigate to other pages
-    let navigate = useNavigate();
-
-    //Will navigate to the specified page upon the arrow being clicked
-    const handleClick = () => {
-        navigate("/Search")
-    }
 
     let text = "Welcome to the grocery store database, please click one of the buttons below to explore what this app can do."
-    const [items] = useState([
-        {
-            id: 1,
-            page: "/Search",
-            message: "Search data"
-        }
-    ])
+    const buttons = [
+        { id: 1, page: "/Search", message: "Search Data"},
+        { id: 2, page: "/Create", message: "Create Data"},
+        { id: 3, page: "/Update", message: "Update Data"},
+        { id: 4, page: "/Delete", message: "Delete Data"}
+    ]
 
     return(
-        <Page message={text} buttons={items}/>
+        <Page message={text} buttons={buttons}/>
     )
 }
 

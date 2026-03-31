@@ -1,23 +1,16 @@
 //Will printout the search data page
-import { useNavigate } from 'react-router-dom';
-import './Page.css'
+import Page from './Page'
 
 const Search = () => {
-    //Will be used to navigate to other pages
-    let navigate = useNavigate();
+    let text = "Select an entry type you want to search for"
+    const buttons = [
+        { id: 1, page: "/SearchAll", message: "Search all entries"},
+        { id: 2, page: "/SearchOne", message: "Search for one entry"},
+        { id: 3, page: "/", message: "Back"}
+    ]
 
-    //Will navigate to the specified page upon the arrow being clicked
-    const handleClick = () => {
-        navigate("/")
-    }
-
-    return(
-        <div>
-            <header className='header'>
-                Welcome to the search page
-            </header>
-            <button onClick={handleClick}>Back</button>
-        </div>
+    return (
+        <Page message={text} buttons={buttons}/>
     )
 }
 
