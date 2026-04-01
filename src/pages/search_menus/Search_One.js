@@ -4,7 +4,9 @@ import Page from "../Page";
 const SearchOne = () => {
     let text = "Select an entry type you want to search"
     const buttons = [
-        { id: 1, page: "/Search", message: "Back"}
+        { id: 1, page: "/SearchCustomers", message: "Customers"},
+        { id: 2, page: "/SearchEmployees", message: "Employees"},
+        { id: 3, page: "/Search", message: "Back"}
     ]
 
     return (

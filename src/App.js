@@ -5,6 +5,8 @@ import Update from './pages/Update';
 import Delete from './pages/Delete';
 import SearchAll from './pages/search_menus/Search_All';
 import SearchOne from './pages/search_menus/Search_One';
+import SearchEmployees from './pages/search_menus/Search_Employees';
+import SearchCustomers from './pages/search_menus/Search_Customers';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 
@@ -20,6 +22,8 @@ function App() {
           <Route path="/Delete" element={<Delete/>}/>
           <Route path="/SearchAll" element={<SearchAll/>}/>
           <Route path="/SearchOne" element={<SearchOne/>}/>
+          <Route path="/SearchEmployees" element={<SearchEmployees/>}/>
+          <Route path="/SearchCustomers" element={<SearchCustomers/>}/>
         </Routes>
       </BrowserRouter>
     </>
