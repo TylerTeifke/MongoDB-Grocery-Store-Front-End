@@ -9,15 +9,12 @@ const SearchAll = () => {
     let navigate = useNavigate();
 
     //Will be used to track the text the user wants displayed
-    const [text, setText] = useState("")
+    const [text, setText] = useState([])
 
-    async function handleFind() {
+    async function handleFind(route) {
         try {
-            const response = await axios.get('/customers');
-            // TODO: add a second customer and see if this function still works
-            const firstNames = response.data.map(customer => customer.firstname)
-            const lastNames = response.data.map(customer => customer.lastname)
-            setText(firstNames + " " + lastNames)
+            const response = await axios.get(route);
+            setText(response.data)
         } 
         catch (err) {
             if (!err?.response) {
@@ -35,19 +32,23 @@ const SearchAll = () => {
             <header className="header">
                 Click on one of the buttons below to see every entry
             </header>
-            <button onClick={() => handleFind()}>Employees</button>
+            <button onClick={() => setText([{id: "1", firstname: "John", lastname: "Smith"}])}>Employees</button>
             <br/>
             <br/>
-            <button onClick={() => setText("Customers")}>Customers</button>
+            <button onClick={() => handleFind('/customers')}>Customers</button>
             <br/>
             <br/>
-            <button onClick={() => setText("Products")}>Products</button>
+            <button onClick={() => setText([{id: "1", firstname: "John", lastname: "Smith"}])}>Products</button>
             <br/>
             <br/>
             <button onClick={() => navigate("/Search")}>Back</button>
             <br/>
             <br/>
-            <p>{text}</p>
+            <p>
+                {text.map(customer => {
+                    return <li key={customer._id}>{customer.firstname} {customer.lastname}</li>
+                })}
+            </p>
         </div>
     )
 }
