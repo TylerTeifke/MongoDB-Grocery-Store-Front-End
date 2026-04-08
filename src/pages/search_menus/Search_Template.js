@@ -2,19 +2,8 @@
 import "../Page.css"
 import { useNavigate } from "react-router-dom";
 
-const SearchTemplate = ({ table }) => {
+const SearchTemplate = ({ table, firstName, setFirstName, lastName, setLastName, handleSubmit }) => {
     let navigate = useNavigate();
-
-    function handleSubmit(e){
-        e.preventDefault()
-
-        // Read the form data
-        const form = e.target;
-        const formData = new FormData(form);
-
-        const formJson = Object.fromEntries(formData.entries());
-        console.log(formJson);
-    }
 
     return(
         <div>
@@ -23,11 +12,25 @@ const SearchTemplate = ({ table }) => {
             </header>
             <form onSubmit={handleSubmit}>
                 <label>
-                    First Name: <input type="text" name="firstName" placeholder="First Name" required/>
+                    First Name: <input 
+                        type="text" 
+                        name="firstName" 
+                        placeholder="First Name" 
+                        required
+                        value={firstName}
+                        onChange={(e) => setFirstName(e.target.value)}
+                    />
                 </label>
                 <hr/>
                 <label>
-                    Last Name: <input type="text" name="lastName" placeholder="Last Name" required/>
+                    Last Name: <input 
+                        type="text" 
+                        name="lastName" 
+                        placeholder="Last Name" 
+                        required 
+                        value={lastName} 
+                        onChange={(e) => setLastName(e.target.value)}
+                    />
                 </label>
                 <hr/>
                 <button type="submit">Submit</button>
