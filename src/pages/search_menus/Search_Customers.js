@@ -6,6 +6,8 @@ import { useState } from "react";
 const SearchCustomers = () => {
     const [firstName, setFirtName] = useState('')
     const [lastName, setLastName] = useState('')
+    const [customer, setCustomer] = useState([])
+    const [display, setDisplay] = useState(false)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -13,7 +15,9 @@ const SearchCustomers = () => {
         try{
             //get this information displayed to the web page
             const response = await axios.get(`/customers/${firstName}/${lastName}`)
-            console.log(JSON.stringify(response.data))
+            console.log(response.data)
+            setCustomer(response.data)
+            setDisplay(true)
         }
         catch(err){
             console.log(err)
@@ -21,14 +25,35 @@ const SearchCustomers = () => {
     }
 
     return(
-        <SearchTemplate 
-            table={"customer"} 
-            firstName={firstName} 
-            setFirstName={setFirtName}
-            lastName={lastName}
-            setLastName={setLastName}
-            handleSubmit={handleSubmit}
-        />
+        <div>
+            <SearchTemplate 
+                table={"customer"} 
+                firstName={firstName} 
+                setFirstName={setFirtName}
+                lastName={lastName}
+                setLastName={setLastName}
+                handleSubmit={handleSubmit}
+            />
+            {display && (
+                <div>
+                    <p>
+                        Name: {customer.firstname} {customer.lastname}
+                    </p>
+                    <p>
+                        Cashier: {customer.employee.firstname} {customer.employee.lastname}
+                    </p>
+                    <p>
+                        Purchases:
+                    </p>
+                    {customer.products.map(product => {
+                        return <li key={product._id}>{product.details.name}, 
+                        Price: {product.details.price}, 
+                        Expiration Date: {product.expiration_date}
+                        </li>
+                    })}
+                </div>
+            )}
+        </div>
     )
 }
 
