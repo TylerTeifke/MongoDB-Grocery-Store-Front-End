@@ -1,7 +1,7 @@
 //Will generate a menu for searching for a specific customer
 import SearchTemplate from "./Search_Template";
 import axios from "../../api/axios"
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 const SearchCustomers = () => {
     const [firstName, setFirtName] = useState('')
@@ -9,18 +9,31 @@ const SearchCustomers = () => {
     const [customer, setCustomer] = useState([])
     const [display, setDisplay] = useState(false)
 
+    //Will be used to display error messages to the screen
+    const errRef = useRef();
+    const [errMsg, setErrMsg] = useState('');
+
     const handleSubmit = async (e) => {
         e.preventDefault()
 
         try{
-            //get this information displayed to the web page
             const response = await axios.get(`/customers/${firstName}/${lastName}`)
-            console.log(response.data)
             setCustomer(response.data)
+            setErrMsg('')
             setDisplay(true)
         }
         catch(err){
-            console.log(err)
+            setDisplay(false)
+            if (!err?.response) {
+                setErrMsg('No Server Response');
+            } 
+            else if (err.response?.status === 401) {
+                setErrMsg('No customer matches that name. Try again');
+            } 
+            else {
+                setErrMsg('Search Failed');
+            }
+            errRef.current.focus();
         }
     }
 
@@ -34,6 +47,13 @@ const SearchCustomers = () => {
                 setLastName={setLastName}
                 handleSubmit={handleSubmit}
             />
+            <p 
+                ref={errRef} 
+                className={errMsg ? "errmsg" : "offscreen"} 
+                aria-live="assertive"
+            >
+                {errMsg}
+            </p>
             {display && (
                 <div>
                     <p>
