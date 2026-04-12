@@ -4,7 +4,7 @@ import axios from "../../api/axios"
 import { useState, useRef } from "react";
 
 const SearchCustomers = () => {
-    const [firstName, setFirtName] = useState('')
+    const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [customer, setCustomer] = useState([])
     const [display, setDisplay] = useState(false)
@@ -42,7 +42,7 @@ const SearchCustomers = () => {
             <SearchTemplate 
                 table={"customer"} 
                 firstName={firstName} 
-                setFirstName={setFirtName}
+                setFirstName={setFirstName}
                 lastName={lastName}
                 setLastName={setLastName}
                 handleSubmit={handleSubmit}

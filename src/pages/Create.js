@@ -4,7 +4,8 @@ import Page from "./Page";
 const Create = () => {
     let text = "Select an entry type you want to create"
     const buttons = [
-        { id: 1, page: "/", message: "Back"}
+        { id: 1, page: "/CreateCustomer", message: "Customer" },
+        { id: 2, page: "/", message: "Back" }
     ]
 
     return (
