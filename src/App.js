@@ -8,6 +8,7 @@ import SearchOne from './pages/search_menus/Search_One';
 import SearchEmployees from './pages/search_menus/Search_Employees';
 import SearchCustomers from './pages/search_menus/Search_Customers';
 import CreateCustomer from './pages/create_menus/Create_Customer';
+import CreateEmployee from './pages/create_menus/Create_Employee';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 
@@ -26,6 +27,7 @@ function App() {
           <Route path="/SearchEmployees" element={<SearchEmployees/>}/>
           <Route path="/SearchCustomers" element={<SearchCustomers/>}/>
           <Route path="/CreateCustomer" element={<CreateCustomer/>}/>
+          <Route path="/CreateEmployee" element={<CreateEmployee/>}/>
         </Routes>
       </BrowserRouter>
     </>
