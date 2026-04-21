@@ -12,7 +12,7 @@ const CreateEmployee = () => {
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [register, setRegister] = useState('')
-    const [position, setPosition] = useState('')
+    const [position, setPosition] = useState('Cashier')
     const [salary, setSalary] = useState(0)
 
     //Will be used to display error messages to the screen
@@ -39,7 +39,7 @@ const CreateEmployee = () => {
             return
         }
         if(position === "Cashier" && register === ''){
-            setErrMsg('Cashiers need a registers. Input a letter into the register field.')
+            setErrMsg('Invalid register. Type a letter in the register field')
             //errRef.current.focus()
             return
         }

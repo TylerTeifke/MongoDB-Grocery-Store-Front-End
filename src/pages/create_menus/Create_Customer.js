@@ -4,6 +4,9 @@ import { useNavigate } from "react-router-dom";
 import axios from "../../api/axios"
 import { useState, useRef } from "react";
 
+//Will be used to prevent the user from entering numbers into the name entries
+const LETTER_REGEX = /^[a-zA-Z]+$/;
+
 const CreateCustomer = () => {
     const [custFirstName, setCustFirstName] = useState('')
     const [custLastName, setCustLastName] = useState('')
@@ -18,6 +21,16 @@ const CreateCustomer = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        const t1 = LETTER_REGEX.test(custFirstName)
+        const t2 = LETTER_REGEX.test(custLastName)
+        const t3 = LETTER_REGEX.test(empFirstName)
+        const t4 = LETTER_REGEX.test(empLastName)
+
+        if(!t1 || !t2 || !t3 || !t4){
+            setErrMsg('One of the name fields is invalid. Try again')
+            return
+        }
         
         try {
             const response = await axios.post('/customers',
