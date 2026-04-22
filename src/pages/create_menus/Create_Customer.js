@@ -39,8 +39,6 @@ const CreateCustomer = () => {
                     headers: { 'Content-Type': 'application/json' }
                 }
             );
-            // TODO: remove console.logs before deployment
-            console.log(JSON.stringify(response?.data));
             setErrMsg('')
         } catch (err) {
             if (!err?.response) {

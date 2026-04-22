@@ -30,17 +30,14 @@ const CreateEmployee = () => {
 
         if(!t1 || !t2){
             setErrMsg("There can be no numbers in the name entries. Try again")
-            //errRef.current.focus()
             return
         }
         if(position !== "Cashier" && register !== ''){
             setErrMsg('Non-cashiers do not get registers. Clear the register field.')
-            //errRef.current.focus()
             return
         }
         if(position === "Cashier" && register === ''){
             setErrMsg('Invalid register. Type a letter in the register field')
-            //errRef.current.focus()
             return
         }
             
@@ -51,8 +48,6 @@ const CreateEmployee = () => {
                     headers: { 'Content-Type': 'application/json' }
                 }
             );
-            // TODO: remove console.logs before deployment
-            console.log(JSON.stringify(response?.data));
             setErrMsg('')
         } catch (err) {
             if (!err?.response) {

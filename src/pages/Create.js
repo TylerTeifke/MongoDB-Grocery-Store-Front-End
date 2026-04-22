@@ -6,7 +6,8 @@ const Create = () => {
     const buttons = [
         { id: 1, page: "/CreateCustomer", message: "Customer" },
         { id: 2, page: "/CreateEmployee", message: "Employee" },
-        { id: 3, page: "/", message: "Back" }
+        { id: 3, page: "/CreateProduct", message: "Product" },
+        { id: 4, page: "/", message: "Back" }
     ]
 
     return (
