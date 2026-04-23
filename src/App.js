@@ -10,6 +10,7 @@ import SearchCustomers from './pages/search_menus/Search_Customers';
 import CreateCustomer from './pages/create_menus/Create_Customer';
 import CreateEmployee from './pages/create_menus/Create_Employee';
 import CreateProduct from './pages/create_menus/Create_Product';
+import AddToInventory from './pages/create_menus/Add_To_Inventory';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 
@@ -30,6 +31,7 @@ function App() {
           <Route path="/CreateCustomer" element={<CreateCustomer/>}/>
           <Route path="/CreateEmployee" element={<CreateEmployee/>}/>
           <Route path="/CreateProduct" element={<CreateProduct/>}/>
+          <Route path="/AddToInventory" element={<AddToInventory/>}/>
         </Routes>
       </BrowserRouter>
     </>
