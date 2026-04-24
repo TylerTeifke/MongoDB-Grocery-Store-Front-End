@@ -11,6 +11,8 @@ import CreateCustomer from './pages/create_menus/Create_Customer';
 import CreateEmployee from './pages/create_menus/Create_Employee';
 import CreateProduct from './pages/create_menus/Create_Product';
 import AddToInventory from './pages/create_menus/Add_To_Inventory';
+import UpdateEmployees from './pages/update_menus/update_employees';
+import UpdateEmployeeName from './pages/update_menus/update_employee_data/update_employee_name';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 
@@ -32,6 +34,8 @@ function App() {
           <Route path="/CreateEmployee" element={<CreateEmployee/>}/>
           <Route path="/CreateProduct" element={<CreateProduct/>}/>
           <Route path="/AddToInventory" element={<AddToInventory/>}/>
+          <Route path="/UpdateEmployees" element={<UpdateEmployees/>}/>
+          <Route path="/UpdateEmployeeName" element={<UpdateEmployeeName/>}/>
         </Routes>
       </BrowserRouter>
     </>

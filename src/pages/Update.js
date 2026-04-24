@@ -4,7 +4,8 @@ import Page from "./Page";
 const Update = () => {
     let text = "Select an entry type you want to update"
     const buttons = [
-        { id: 1, page: "/", message: "Back"}
+        { id: 1, page: "/UpdateEmployees", message: "Employees" },
+        { id: 2, page: "/", message: "Back"}
     ]
 
     return (
