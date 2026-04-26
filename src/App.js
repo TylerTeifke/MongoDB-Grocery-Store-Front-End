@@ -13,6 +13,8 @@ import CreateProduct from './pages/create_menus/Create_Product';
 import AddToInventory from './pages/create_menus/Add_To_Inventory';
 import UpdateEmployees from './pages/update_menus/update_employees';
 import UpdateEmployeeName from './pages/update_menus/update_employee_data/update_employee_name';
+import UpdateSalary from './pages/update_menus/update_employee_data/update_salary';
+import UpdateRegister from './pages/update_menus/update_employee_data/update_register';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 
@@ -36,6 +38,8 @@ function App() {
           <Route path="/AddToInventory" element={<AddToInventory/>}/>
           <Route path="/UpdateEmployees" element={<UpdateEmployees/>}/>
           <Route path="/UpdateEmployeeName" element={<UpdateEmployeeName/>}/>
+          <Route path="/UpdateSalary" element={<UpdateSalary/>}/>
+          <Route path="/UpdateRegister" element={<UpdateRegister/>}/>
         </Routes>
       </BrowserRouter>
     </>

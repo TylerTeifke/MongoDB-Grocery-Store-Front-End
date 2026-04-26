@@ -1,53 +1,29 @@
-//will generate a menu for creating a new employee
-import "../Page.css"
-import { useNavigate } from "react-router-dom";
-import axios from "../../api/axios"
-import { useState, useRef } from "react";
+//Will generate a menu for updating an employee's register
+import "../../Page.css"
+import { useState, useRef } from "react"
+import { useNavigate } from "react-router-dom"
+import axios from "../../../api/axios"
 
-//Will be used to prevent the user from entering numbers into the name and register
-//entries
+//Will be used to prevent the user from entering numbers into the register entry
 const LETTER_REGEX = /^[a-zA-Z]+$/;
 
-const CreateEmployee = () => {
+const UpdateRegister = () => {
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [register, setRegister] = useState('')
-    const [position, setPosition] = useState('Cashier')
-    const [salary, setSalary] = useState(0)
 
     //Will be used to display error messages to the screen
     const errRef = useRef();
     const [errMsg, setErrMsg] = useState('');
-
+    
     let navigate = useNavigate();
 
     const handleSubmit = async (e) => {
-        //get the input for this menu to work.
         e.preventDefault();
-
-        const t1 = LETTER_REGEX.test(firstName)
-        const t2 = LETTER_REGEX.test(lastName)
-
-        if(!t1 || !t2){
-            setErrMsg("There can be no numbers in the name entries. Try again")
-            return
-        }
-        if(position !== "Cashier" && register !== ''){
-            setErrMsg('Non-cashiers do not get registers. Clear the register field.')
-            return
-        }
-        if(position === "Cashier" && register === ''){
-            setErrMsg('Invalid register. Type a letter in the register field')
-            return
-        }
-        if(salary < 1){
-            setErrMsg("An employee's salary must be greater than $0 per hour. Try again.")
-            return
-        }
-            
+    
         try {
-            const response = await axios.post('/employees',
-                JSON.stringify({ firstName, lastName, register, position, salary }),
+            const response = await axios.put('/employees/updateRegister',
+                JSON.stringify({ firstName, lastName, register }),
                 {
                     headers: { 'Content-Type': 'application/json' }
                 }
@@ -58,10 +34,10 @@ const CreateEmployee = () => {
                 setErrMsg('No Server Response');
             } 
             else if (err.response?.status === 409) {
-                setErrMsg('That employee is already in the database');
-            } 
-            else if (err.response?.status === 410){
-                setErrMsg('That position is not in the database');
+                setErrMsg('There is no employee with that name');
+            }
+            else if (err.response?.status === 410) {
+                setErrMsg('That employee is not a cashier');
             }
             else {
                 setErrMsg('Registration Failed')
@@ -70,6 +46,7 @@ const CreateEmployee = () => {
         }
     }
 
+    //Will prevent the user from entering any invalid data into the register entry
     const handleChange = (e) => {
         const input = e.target.value
 
@@ -81,8 +58,8 @@ const CreateEmployee = () => {
     return(
         <div>
             <header className="header">
-                Type in the name of the employee you want to create below as well as 
-                their position, salary, and if required their cash register
+                Type in the name of the employee whose cash register you want to update, as 
+                well as their new register
             </header>
             <p 
                 ref={errRef} 
@@ -115,39 +92,22 @@ const CreateEmployee = () => {
                 </label>
                 <hr/>
                 <label>
-                    Position: <select value={position} onChange={(e) => setPosition(e.target.value)}>
-                        <option value="Cashier">Cashier</option>
-                        <option value="Clerk">Clerk</option>
-                        <option value="Manager">Manager</option>
-                        </select>
-                </label>
-                <hr/>
-                <label>
                     Register: <input
                         type="text"
                         name="register"
+                        required
                         maxLength={1}
                         value={register}
                         onChange={handleChange}
                     />
                 </label>
                 <hr/>
-                <label>
-                    Salary: <input 
-                        type="number" 
-                        name="salary"
-                        required 
-                        value={salary} 
-                        onChange={(e) => setSalary(e.target.value)}
-                    />
-                </label>
-                <hr/>
                 <button type="submit">Submit</button>
             </form>
             <br/>
-            <button onClick={() => navigate("/Create")}>Back</button>
+            <button onClick={() => navigate("/UpdateEmployees")}>Back</button>
         </div>
     )
 }
 
-export default CreateEmployee
+export default UpdateRegister
