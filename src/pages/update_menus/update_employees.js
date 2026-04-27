@@ -6,7 +6,8 @@ const UpdateEmployees = () => {
         { id: 1, page: "/UpdateEmployeeName", message: "Update Name" },
         { id: 2, page: "/UpdateSalary", message: "Update Salary" },
         { id: 3, page: "/UpdateRegister", message: "Update Register" },
-        { id: 4, page: "/Update", message: "Back"}
+        { id: 4, page: "/UpdatePosition", message: "Update Position" },
+        { id: 5, page: "/Update", message: "Back"}
     ]
 
     return (
