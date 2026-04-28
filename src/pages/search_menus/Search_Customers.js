@@ -59,9 +59,11 @@ const SearchCustomers = () => {
                     <p>
                         Name: {customer.firstname} {customer.lastname}
                     </p>
-                    <p>
-                        Cashier: {customer.employee.firstname} {customer.employee.lastname}
-                    </p>
+                    {customer.employee !== null && (
+                        <p>
+                            Cashier: {customer.employee.firstname} {customer.employee.lastname}
+                        </p>
+                    )}
                     <p>
                         Purchases:
                     </p>
