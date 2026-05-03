@@ -59,8 +59,8 @@ const UpdateCashier = () => {
     return(
         <div>
             <header className="header">
-                Type in the name of the cashier who's customer list you want to add to, 
-                as well as the name of the customer you want to add
+                Type in the name of the customer whose cashier you want to change,
+                and their new cashier.
             </header>
             <p 
                 ref={errRef} 
