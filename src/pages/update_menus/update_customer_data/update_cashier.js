@@ -1,17 +1,14 @@
-//Will generate a template for updating a person's name
-import "../Page.css"
+//will generate a menu for updating a customer's cashier
+import "../../Page.css"
 import { useState, useRef } from "react"
 import { useNavigate } from "react-router-dom"
-import axios from "../../api/axios"
+import axios from "../../../api/axios"
 
-//Will make sure there are only letters in a person's name
-const LETTER_REGEX = /^[a-zA-Z]+$/;
-
-const UpdateName = ({ person, prevPage }) => {
-    const [oldFirstName, setOldFirstName] = useState('')
-    const [oldLastName, setOldLastName] = useState('')
-    const [newFirstName, setNewFirstName] = useState('')
-    const [newLastName, setNewLastName] = useState('')
+const UpdateCashier = () => {
+    const [custFirstName, setCustFirstName] = useState('')
+    const [custLastName, setCustLastName] = useState('')
+    const [empFirstName, setEmpFirstName] = useState('')
+    const [empLastName, setEmpLastName] = useState('')
 
     //Will be used to display error messages to the screen
     const errRef = useRef();
@@ -20,41 +17,37 @@ const UpdateName = ({ person, prevPage }) => {
     //Will be used to display the success message to the screen
     const successRef = useRef();
     const [successMsg, setSuccessMsg] = useState('');
-    
+
     let navigate = useNavigate();
-    //The singular form of the type of person in the database getting renamed
-    let singular = person.slice(0, person.length - 1)
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        const t1 = LETTER_REGEX.test(newFirstName)
-        const t2 = LETTER_REGEX.test(newLastName)
-
-        if(!t1 || !t2){
-            setErrMsg("There can be no numbers in the new name entries. Try again")
-            return
-        }
-
+        
         try {
-            const response = await axios.put(`/${person}/updateName`,
-                JSON.stringify({ oldFirstName, oldLastName, newFirstName, newLastName }),
+            const response = await axios.put('customers/updateCashier',
+                JSON.stringify({ custFirstName, custLastName, empFirstName, empLastName }),
                 {
                     headers: { 'Content-Type': 'application/json' }
                 }
             );
             setErrMsg('')
             setSuccessMsg('Update Successful')
-            successRef.current.focus();
+            successRef.current.focus()
         } catch (err) {
             if (!err?.response) {
                 setErrMsg('No Server Response');
             } 
             else if (err.response?.status === 409) {
-                setErrMsg(`There is no ${singular} with the old name`);
+                setErrMsg('That customer is not in the database');
             } 
             else if (err.response?.status === 410){
-                setErrMsg(`There is already a ${singular} with the new name`);
+                setErrMsg('That employee is not in the database');
+            }
+            else if (err.response?.status === 411){
+                setErrMsg("That employee is not a cashier");
+            }
+            else if (err.response?.status === 412){
+                setErrMsg("That employee is already the customer's cashier");
             }
             else {
                 setErrMsg('Registration Failed')
@@ -66,8 +59,8 @@ const UpdateName = ({ person, prevPage }) => {
     return(
         <div>
             <header className="header">
-                Type in the name of the {singular} you want to update below as well as 
-                their updated name
+                Type in the name of the cashier who's customer list you want to add to, 
+                as well as the name of the customer you want to add
             </header>
             <p 
                 ref={errRef} 
@@ -85,55 +78,55 @@ const UpdateName = ({ person, prevPage }) => {
             </p>
             <form onSubmit={handleSubmit}>
                 <label>
-                    Old First Name: <input 
+                    Customer First Name: <input 
                         type="text" 
-                        name="oldFirstName" 
+                        name="custFirstName" 
                         placeholder="First Name" 
                         required
-                        value={oldFirstName}
-                        onChange={(e) => setOldFirstName(e.target.value)}
+                        value={custFirstName}
+                        onChange={(e) => setCustFirstName(e.target.value)}
                     />
                 </label>
                 <hr/>
                 <label>
-                    Old Last Name: <input 
+                    Customer Last Name: <input 
                         type="text" 
-                        name="oldLastName" 
+                        name="custLastName" 
                         placeholder="Last Name" 
                         required 
-                        value={oldLastName} 
-                        onChange={(e) => setOldLastName(e.target.value)}
+                        value={custLastName} 
+                        onChange={(e) => setCustLastName(e.target.value)}
                     />
                 </label>
                 <hr/>
                 <label>
-                    New First Name: <input 
+                    Employee First Name: <input 
                         type="text" 
-                        name="newFirstName" 
+                        name="empFirstName" 
                         placeholder="First Name" 
                         required
-                        value={newFirstName}
-                        onChange={(e) => setNewFirstName(e.target.value)}
+                        value={empFirstName}
+                        onChange={(e) => setEmpFirstName(e.target.value)}
                     />
                 </label>
                 <hr/>
                 <label>
-                    New Last Name: <input 
+                    Employee Last Name: <input 
                         type="text" 
-                        name="newLastName" 
+                        name="empLastName" 
                         placeholder="Last Name" 
                         required 
-                        value={newLastName} 
-                        onChange={(e) => setNewLastName(e.target.value)}
+                        value={empLastName} 
+                        onChange={(e) => setEmpLastName(e.target.value)}
                     />
                 </label>
                 <hr/>
                 <button type="submit">Submit</button>
             </form>
             <br/>
-            <button onClick={() => navigate(prevPage)}>Back</button>
+            <button onClick={() => navigate("/UpdateCustomers")}>Back</button>
         </div>
     )
 }
 
-export default UpdateName
+export default UpdateCashier

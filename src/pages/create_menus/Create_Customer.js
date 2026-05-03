@@ -17,6 +17,10 @@ const CreateCustomer = () => {
     const errRef = useRef();
     const [errMsg, setErrMsg] = useState('');
 
+    //Will be used to display the success message to the screen
+    const successRef = useRef();
+    const [successMsg, setSuccessMsg] = useState('');
+
     let navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -40,6 +44,8 @@ const CreateCustomer = () => {
                 }
             );
             setErrMsg('')
+            setSuccessMsg('Creation Successful')
+            successRef.current.focus()
         } catch (err) {
             if (!err?.response) {
                 setErrMsg('No Server Response');
@@ -72,6 +78,13 @@ const CreateCustomer = () => {
                 aria-live="assertive"
             >
                 {errMsg}
+            </p>
+            <p 
+                ref={successRef} 
+                className={successMsg ? "successmsg" : "offscreen"} 
+                aria-live="assertive"
+            >
+                {successMsg}
             </p>
             <form onSubmit={handleSubmit}>
                 <label>

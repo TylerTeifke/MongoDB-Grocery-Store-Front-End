@@ -19,6 +19,7 @@ import UpdatePosition from './pages/update_menus/update_employee_data/update_pos
 import UpdateCustomerList from './pages/update_menus/update_employee_data/update_customer_list';
 import UpdateCustomers from './pages/update_menus/update_customer';
 import UpdateCustomerName from './pages/update_menus/update_customer_data/update_customer_name';
+import UpdateCashier from './pages/update_menus/update_customer_data/update_cashier';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 
@@ -48,6 +49,7 @@ function App() {
           <Route path="/UpdateCustomerList" element={<UpdateCustomerList/>}/>
           <Route path="/UpdateCustomers" element={<UpdateCustomers/>}/>
           <Route path="/UpdateCustomerName" element={<UpdateCustomerName/>}/>
+          <Route path="/UpdateCashier" element={<UpdateCashier/>}/>
         </Routes>
       </BrowserRouter>
     </>
