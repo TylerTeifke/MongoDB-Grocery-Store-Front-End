@@ -1,5 +1,6 @@
 //will generate a menu for creating a new customer
 import "../Page.css"
+import Response from "../../templates/response";
 import { useNavigate } from "react-router-dom";
 import axios from "../../api/axios"
 import { useState, useRef } from "react";
@@ -32,6 +33,7 @@ const CreateCustomer = () => {
         const t4 = LETTER_REGEX.test(empLastName)
 
         if(!t1 || !t2 || !t3 || !t4){
+            setSuccessMsg('')
             setErrMsg('One of the name fields is invalid. Try again')
             return
         }
@@ -47,6 +49,7 @@ const CreateCustomer = () => {
             setSuccessMsg('Creation Successful')
             successRef.current.focus()
         } catch (err) {
+            setSuccessMsg('')
             if (!err?.response) {
                 setErrMsg('No Server Response');
             } 
@@ -72,20 +75,7 @@ const CreateCustomer = () => {
                 Type in the name of the customer you want to create below as well as 
                 the name of the cashier who serviced them
             </header>
-            <p 
-                ref={errRef} 
-                className={errMsg ? "errmsg" : "offscreen"} 
-                aria-live="assertive"
-            >
-                {errMsg}
-            </p>
-            <p 
-                ref={successRef} 
-                className={successMsg ? "successmsg" : "offscreen"} 
-                aria-live="assertive"
-            >
-                {successMsg}
-            </p>
+            <Response errMsg={errMsg} errRef={errRef} successMsg={successMsg} successRef={successRef}/>
             <form onSubmit={handleSubmit}>
                 <label>
                     Customer First Name: <input 

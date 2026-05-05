@@ -1,5 +1,6 @@
 //Will generate a menu for creating a new product
 import "../Page.css"
+import Response from "../../templates/response";
 import { useNavigate } from "react-router-dom";
 import axios from "../../api/axios"
 import { useState, useRef } from "react";
@@ -30,7 +31,8 @@ const CreateProduct = () => {
         const t1 = LETTER_REGEX.test(name)
     
         if(!t1){
-            setErrMsg("There can be no numbers in the name entry. Try again")
+            setSuccessMsg('')
+            setErrMsg("Invalid Name. Try again")
             return
         }
                 
@@ -45,14 +47,12 @@ const CreateProduct = () => {
             setSuccessMsg('Creation Successful')
             successRef.current.focus()
         } catch (err) {
+            setSuccessMsg('')
             if (!err?.response) {
                 setErrMsg('No Server Response');
             } 
             else if (err.response?.status === 409) {
                 setErrMsg('That product is already in the database');
-            } 
-            else if (err.response?.status === 410){
-                setErrMsg('That product type is not in the database');
             }
             else {
                 setErrMsg('Registration Failed')
@@ -67,20 +67,7 @@ const CreateProduct = () => {
                 Type in the name of the product you want to create below as well as 
                 the price and pick a type
             </header>
-            <p 
-                ref={errRef} 
-                className={errMsg ? "errmsg" : "offscreen"} 
-                aria-live="assertive"
-            >
-                {errMsg}
-            </p>
-            <p 
-                ref={successRef} 
-                className={successMsg ? "successmsg" : "offscreen"} 
-                aria-live="assertive"
-            >
-                {successMsg}
-            </p>
+            <Response errMsg={errMsg} errRef={errRef} successMsg={successMsg} successRef={successRef}/>
             <form onSubmit={handleSubmit}>
                 <label>
                     Product Name: <input 
@@ -94,7 +81,7 @@ const CreateProduct = () => {
                 </label>
                 <hr/>
                 <label>
-                    Position: <select value={type} onChange={(e) => setType(e.target.value)}>
+                    Type: <select value={type} onChange={(e) => setType(e.target.value)}>
                         <option value="Dairy">Dairy</option>
                         <option value="Meat">Meat</option>
                         <option value="Fruit">Fruit</option>

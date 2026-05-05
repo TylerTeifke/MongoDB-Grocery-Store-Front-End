@@ -1,5 +1,6 @@
 //Will generate a menu for updating an employee's salary
 import "../../Page.css"
+import Response from "../../../templates/response"
 import { useState, useRef } from "react"
 import { useNavigate } from "react-router-dom"
 import axios from "../../../api/axios"
@@ -23,6 +24,7 @@ const UpdateSalary = () => {
         e.preventDefault();
 
         if(salary < 1){
+            setSuccessMsg('')
             setErrMsg("An employee's salary must be greater than $0 per hour. Try again.")
             return
         }
@@ -38,6 +40,7 @@ const UpdateSalary = () => {
             setSuccessMsg('Update Successful')
             successRef.current.focus();
         } catch (err) {
+            setSuccessMsg('')
             if (!err?.response) {
                 setErrMsg('No Server Response');
             } 
@@ -57,20 +60,7 @@ const UpdateSalary = () => {
                 Type in the name of the employee whose salary you want to update, as 
                 well as their new salary
             </header>
-            <p 
-                ref={errRef} 
-                className={errMsg ? "errmsg" : "offscreen"} 
-                aria-live="assertive"
-            >
-                {errMsg}
-            </p>
-            <p 
-                ref={successRef} 
-                className={successMsg ? "successmsg" : "offscreen"} 
-                aria-live="assertive"
-            >
-                {successMsg}
-            </p>
+            <Response errMsg={errMsg} errRef={errRef} successMsg={successMsg} successRef={successRef}/>
             <form onSubmit={handleSubmit}>
                 <label>
                     First Name: <input 

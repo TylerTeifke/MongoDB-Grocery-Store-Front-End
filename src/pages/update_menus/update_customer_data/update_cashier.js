@@ -1,5 +1,6 @@
 //will generate a menu for updating a customer's cashier
 import "../../Page.css"
+import Response from "../../../templates/response"
 import { useState, useRef } from "react"
 import { useNavigate } from "react-router-dom"
 import axios from "../../../api/axios"
@@ -34,6 +35,7 @@ const UpdateCashier = () => {
             setSuccessMsg('Update Successful')
             successRef.current.focus()
         } catch (err) {
+            setSuccessMsg('')
             if (!err?.response) {
                 setErrMsg('No Server Response');
             } 
@@ -62,20 +64,7 @@ const UpdateCashier = () => {
                 Type in the name of the customer whose cashier you want to change,
                 and their new cashier.
             </header>
-            <p 
-                ref={errRef} 
-                className={errMsg ? "errmsg" : "offscreen"} 
-                aria-live="assertive"
-            >
-                {errMsg}
-            </p>
-            <p 
-                ref={successRef} 
-                className={successMsg ? "successmsg" : "offscreen"} 
-                aria-live="assertive"
-            >
-                {successMsg}
-            </p>
+            <Response errMsg={errMsg} errRef={errRef} successMsg={successMsg} successRef={successRef}/>
             <form onSubmit={handleSubmit}>
                 <label>
                     Customer First Name: <input 

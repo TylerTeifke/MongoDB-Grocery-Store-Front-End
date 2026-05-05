@@ -1,11 +1,9 @@
 //Will generate the menu for adding an item to the inventory
 import "../Page.css"
+import Response from "../../templates/response";
 import { useNavigate } from "react-router-dom";
 import axios from "../../api/axios"
 import { useState, useRef } from "react";
-
-//Will be used to prevent the user from entering numbers into the name entry
-const LETTER_REGEX = /^[a-zA-Z ]+$/;
 
 const AddToInventory = () => {
 
@@ -25,13 +23,6 @@ const AddToInventory = () => {
     const handleSubmit = async (e) => {
         //get the input for this menu to work.
         e.preventDefault();
-        
-        const t1 = LETTER_REGEX.test(name)
-        
-        if(!t1){
-            setErrMsg("There can only be letters in the name entry. Try again")
-            return
-        }
                     
         try {
             const response = await axios.post('/products/inventory',
@@ -44,6 +35,7 @@ const AddToInventory = () => {
             setSuccessMsg('Creation Successful')
             successRef.current.focus()
         } catch (err) {
+            setSuccessMsg('')
             if (!err?.response) {
                 setErrMsg('No Server Response');
             } 
@@ -63,20 +55,7 @@ const AddToInventory = () => {
                 Type in the name of the product you want to add below. Note that for 
                 vegetables, the expiration date does not matter and you can enter anything
             </header>
-            <p 
-                ref={errRef} 
-                className={errMsg ? "errmsg" : "offscreen"} 
-                aria-live="assertive"
-            >
-                {errMsg}
-            </p>
-            <p 
-                ref={successRef} 
-                className={successMsg ? "successmsg" : "offscreen"} 
-                aria-live="assertive"
-            >
-                {successMsg}
-            </p>
+            <Response errMsg={errMsg} errRef={errRef} successMsg={successMsg} successRef={successRef}/>
             <form onSubmit={handleSubmit}>
                 <label>
                     Product Name: <input 

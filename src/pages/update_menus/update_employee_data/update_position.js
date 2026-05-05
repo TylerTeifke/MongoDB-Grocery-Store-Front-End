@@ -1,5 +1,6 @@
 //will generate a menu for creating a new employee
 import "../../Page.css"
+import Response from "../../../templates/response"
 import { useState, useRef } from "react"
 import { useNavigate } from "react-router-dom"
 import axios from "../../../api/axios"
@@ -29,10 +30,12 @@ const UpdatePosition = () => {
         e.preventDefault();
 
         if(position !== "Cashier" && register !== ''){
+            setSuccessMsg('')
             setErrMsg('Non-cashiers do not get registers. Clear the register field.')
             return
         }
         if(position === "Cashier" && register === ''){
+            setSuccessMsg('')
             setErrMsg('Invalid register. Type a letter in the register field')
             return
         }
@@ -48,6 +51,7 @@ const UpdatePosition = () => {
             setSuccessMsg('Update Successful')
             successRef.current.focus();
         } catch (err) {
+            setSuccessMsg('')
             if (!err?.response) {
                 setErrMsg('No Server Response');
             } 
@@ -76,20 +80,7 @@ const UpdatePosition = () => {
                 If their position is being changed to cashier, then also enter a register 
                 for them to use
             </header>
-            <p 
-                ref={errRef} 
-                className={errMsg ? "errmsg" : "offscreen"} 
-                aria-live="assertive"
-            >
-                {errMsg}
-            </p>
-            <p 
-                ref={successRef} 
-                className={successMsg ? "successmsg" : "offscreen"} 
-                aria-live="assertive"
-            >
-                {successMsg}
-            </p>
+            <Response errMsg={errMsg} errRef={errRef} successMsg={successMsg} successRef={successRef}/>
             <form onSubmit={handleSubmit}>
                 <label>
                     First Name: <input 

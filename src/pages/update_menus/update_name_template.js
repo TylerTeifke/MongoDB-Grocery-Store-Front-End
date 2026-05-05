@@ -1,5 +1,6 @@
 //Will generate a template for updating a person's name
 import "../Page.css"
+import Response from "../../templates/response"
 import { useState, useRef } from "react"
 import { useNavigate } from "react-router-dom"
 import axios from "../../api/axios"
@@ -47,6 +48,7 @@ const UpdateName = ({ person, prevPage }) => {
             setSuccessMsg('Update Successful')
             successRef.current.focus();
         } catch (err) {
+            setSuccessMsg('')
             if (!err?.response) {
                 setErrMsg('No Server Response');
             } 
@@ -69,20 +71,7 @@ const UpdateName = ({ person, prevPage }) => {
                 Type in the name of the {singular} you want to update below as well as 
                 their updated name
             </header>
-            <p 
-                ref={errRef} 
-                className={errMsg ? "errmsg" : "offscreen"} 
-                aria-live="assertive"
-            >
-                {errMsg}
-            </p>
-            <p 
-                ref={successRef} 
-                className={successMsg ? "successmsg" : "offscreen"} 
-                aria-live="assertive"
-            >
-                {successMsg}
-            </p>
+            <Response errMsg={errMsg} errRef={errRef} successMsg={successMsg} successRef={successRef}/>
             <form onSubmit={handleSubmit}>
                 <label>
                     Old First Name: <input 

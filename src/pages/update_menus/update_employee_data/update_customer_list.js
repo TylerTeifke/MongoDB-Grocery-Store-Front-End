@@ -1,5 +1,6 @@
 //will generate a menu for adding a customer to the employee's customer list
 import "../../Page.css"
+import Response from "../../../templates/response"
 import { useState, useRef } from "react"
 import { useNavigate } from "react-router-dom"
 import axios from "../../../api/axios"
@@ -34,6 +35,7 @@ const UpdateCustomerList = () => {
             setSuccessMsg('Update Successful')
             successRef.current.focus();
         } catch (err) {
+            setSuccessMsg('')
             if (!err?.response) {
                 setErrMsg('No Server Response');
             } 
@@ -62,20 +64,7 @@ const UpdateCustomerList = () => {
                 Type in the name of the cashier who's customer list you want to add to, 
                 as well as the name of the customer you want to add
             </header>
-            <p 
-                ref={errRef} 
-                className={errMsg ? "errmsg" : "offscreen"} 
-                aria-live="assertive"
-            >
-                {errMsg}
-            </p>
-            <p 
-                ref={successRef} 
-                className={successMsg ? "successmsg" : "offscreen"} 
-                aria-live="assertive"
-            >
-                {successMsg}
-            </p>
+            <Response errMsg={errMsg} errRef={errRef} successMsg={successMsg} successRef={successRef}/>
             <form onSubmit={handleSubmit}>
                 <label>
                     Employee First Name: <input 

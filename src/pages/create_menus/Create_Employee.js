@@ -1,5 +1,6 @@
 //will generate a menu for creating a new employee
 import "../Page.css"
+import Response from "../../templates/response";
 import { useNavigate } from "react-router-dom";
 import axios from "../../api/axios"
 import { useState, useRef } from "react";
@@ -33,18 +34,22 @@ const CreateEmployee = () => {
         const t2 = LETTER_REGEX.test(lastName)
 
         if(!t1 || !t2){
-            setErrMsg("There can be no numbers in the name entries. Try again")
+            setSuccessMsg('')
+            setErrMsg("One of the name entries is invalid. Try again")
             return
         }
         if(position !== "Cashier" && register !== ''){
+            setSuccessMsg('')
             setErrMsg('Non-cashiers do not get registers. Clear the register field.')
             return
         }
         if(position === "Cashier" && register === ''){
+            setSuccessMsg('')
             setErrMsg('Invalid register. Type a letter in the register field')
             return
         }
         if(salary < 1){
+            setSuccessMsg('')
             setErrMsg("An employee's salary must be greater than $0 per hour. Try again.")
             return
         }
@@ -60,14 +65,12 @@ const CreateEmployee = () => {
             setSuccessMsg('Creation Successful')
             successRef.current.focus()
         } catch (err) {
+            setSuccessMsg('')
             if (!err?.response) {
                 setErrMsg('No Server Response');
             } 
             else if (err.response?.status === 409) {
                 setErrMsg('That employee is already in the database');
-            } 
-            else if (err.response?.status === 410){
-                setErrMsg('That position is not in the database');
             }
             else {
                 setErrMsg('Registration Failed')
@@ -90,20 +93,7 @@ const CreateEmployee = () => {
                 Type in the name of the employee you want to create below as well as 
                 their position, salary, and if required their cash register
             </header>
-            <p 
-                ref={errRef} 
-                className={errMsg ? "errmsg" : "offscreen"} 
-                aria-live="assertive"
-            >
-                {errMsg}
-            </p>
-            <p 
-                ref={successRef} 
-                className={successMsg ? "successmsg" : "offscreen"} 
-                aria-live="assertive"
-            >
-                {successMsg}
-            </p>
+            <Response errMsg={errMsg} errRef={errRef} successMsg={successMsg} successRef={successRef}/>
             <form onSubmit={handleSubmit}>
                 <label>
                     First Name: <input 
