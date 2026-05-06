@@ -5,7 +5,8 @@ const UpdateCustomers = () => {
     const buttons = [
         { id: 1, page: "/UpdateCustomerName", message: "Update Name"},
         { id: 2, page: "/UpdateCashier", message: "Update Cashier"},
-        { id: 3, page: "/Update", message: "Back"}
+        { id: 3, page: "/AddProduct", message: "Add Product"},
+        { id: 4, page: "/Update", message: "Back"}
     ]
 
     return (
