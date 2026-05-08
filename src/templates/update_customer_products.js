@@ -1,7 +1,7 @@
 //Will generate a template for updating a customer's products
 import "../pages/Page.css"
 import Response from "./response"
-import { useState, useRef, useEffect } from "react"
+import { useState, useRef } from "react"
 import { useNavigate } from "react-router-dom"
 import axios from "../api/axios"
 
@@ -38,21 +38,25 @@ const UpdateProduct = ({ productApiRoute, customerApiRoute }) => {
                 response = await axios.get(`/products/${productApiRoute}`);
             }
             else{
-                response = await axios.get(`/products/${productApiRoute}`,
-                    JSON.stringify({ firstName, lastName }),
-                    {
-                        headers: { 'Content-Type': 'application/json' }
-                    }
-                );
+                response = await axios.get(`/products/${productApiRoute}/${firstName}/${lastName}`);
             }
+            setErrMsg('')
             setProducts(response.data)
+            setProduct(response.data[0]._id)
+            setDisplayProducts(true)
         } 
         catch (err) {
+            setSuccessMsg('')
             if (!err?.response) {
                 console.log("No server response")
             } 
-            else if (err.response?.status === 204) {
-                setErrMsg("No products can either be added to the customer's Kart, or removed from the kart.");
+            else if (err.response?.status === 409) {
+                if(productApiRoute === 'available'){
+                    setErrMsg("No products are available to be added to the cart");
+                }
+                else{
+                    setErrMsg("The customer does not have any products to remove")
+                }
             }
             else {
                 console.log('Request Failed')
@@ -68,7 +72,6 @@ const UpdateProduct = ({ productApiRoute, customerApiRoute }) => {
             const response = await axios.get(`/customers/${firstName}/${lastName}`);
             setErrMsg('')
             findProducts()
-            setDisplayProducts(true)
         } catch (err) {
             setSuccessMsg('')
             if (!err?.response) {
@@ -85,7 +88,7 @@ const UpdateProduct = ({ productApiRoute, customerApiRoute }) => {
     }
 
     //Will handle the logic for submitting a product to either be added or removed
-    //from a customer's kart
+    //from a customer's cart
     const handleProductSubmit = async (e) => {
         e.preventDefault();
             
@@ -100,7 +103,7 @@ const UpdateProduct = ({ productApiRoute, customerApiRoute }) => {
                     }
             );
             setErrMsg('')
-            setSuccessMsg('Customer Kart Updated')
+            setSuccessMsg('Customer cart Updated')
             successRef.current.focus()
         } catch (err) {
             setSuccessMsg('')
@@ -108,7 +111,7 @@ const UpdateProduct = ({ productApiRoute, customerApiRoute }) => {
                 setErrMsg('No Server Response');
             }
             else if (err.response?.status === 409) {
-                setErrMsg('The customer already has that product');
+                setErrMsg('Invalid Action');
             }
             else {
                 setErrMsg('Registration Failed')
@@ -120,7 +123,7 @@ const UpdateProduct = ({ productApiRoute, customerApiRoute }) => {
     return(
         <div>
             <header className="header">
-                Type in the name of the customer whose shopping kart you want to update
+                Type in the name of the customer whose shopping cart you want to update
             </header>
             <Response errMsg={errMsg} errRef={errRef} successMsg={successMsg} successRef={successRef}/>
             <form onSubmit={handleNameSubmit}>

@@ -6,7 +6,8 @@ const UpdateCustomers = () => {
         { id: 1, page: "/UpdateCustomerName", message: "Update Name"},
         { id: 2, page: "/UpdateCashier", message: "Update Cashier"},
         { id: 3, page: "/AddProduct", message: "Add Product"},
-        { id: 4, page: "/Update", message: "Back"}
+        { id: 4, page: "/RemoveProduct", message: "Remove Product"},
+        { id: 5, page: "/Update", message: "Back"}
     ]
 
     return (
