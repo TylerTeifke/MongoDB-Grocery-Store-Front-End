@@ -4,6 +4,7 @@ const UpdateProducts = () => {
     let text = "Select what aspect of the products you want to update"
     const buttons = [
         { id: 1, page: "/UpdatePrice", message: "Price" },
+        { id: 2, page: "/UpdateProductName", message: "Name" },
         { id: 5, page: "/Update", message: "Back" }
     ]
 

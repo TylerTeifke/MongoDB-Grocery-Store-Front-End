@@ -24,6 +24,7 @@ import AddProduct from './pages/update_menus/update_customer_data/add_products';
 import RemoveProduct from './pages/update_menus/update_customer_data/remove_product';
 import UpdateProducts from './pages/update_menus/update_product';
 import UpdatePrice from './pages/update_menus/update_product_data/update_price';
+import UpdateProductName from './pages/update_menus/update_product_data/update_name';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 
@@ -58,6 +59,7 @@ function App() {
           <Route path="/RemoveProduct" element={<RemoveProduct/>}/>
           <Route path="/UpdateProducts" element={<UpdateProducts/>}/>
           <Route path="/UpdatePrice" element={<UpdatePrice/>}/>
+          <Route path="/UpdateProductName" element={<UpdateProductName/>}/>
         </Routes>
       </BrowserRouter>
     </>
