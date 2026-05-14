@@ -4,6 +4,7 @@ import Response from "../../templates/response";
 import { useNavigate } from "react-router-dom";
 import axios from "../../api/axios"
 import { useState, useRef } from "react";
+import TypeList from "../../templates/type_list";
 
 //Will be used to prevent the user from entering numbers into the name entry
 const LETTER_REGEX = /^[a-zA-Z ]+$/;
@@ -80,14 +81,7 @@ const CreateProduct = () => {
                     />
                 </label>
                 <hr/>
-                <label>
-                    Type: <select value={type} onChange={(e) => setType(e.target.value)}>
-                        <option value="Dairy">Dairy</option>
-                        <option value="Meat">Meat</option>
-                        <option value="Fruit">Fruit</option>
-                        <option value="Vegetables">Vegetables</option>
-                        </select>
-                </label>
+                <TypeList type={type} setType={setType}/>
                 <hr/>
                 <label>
                     Price: <input 
