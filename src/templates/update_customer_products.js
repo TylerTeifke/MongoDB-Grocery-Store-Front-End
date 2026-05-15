@@ -5,9 +5,6 @@ import { useState, useRef } from "react"
 import { useNavigate } from "react-router-dom"
 import axios from "../api/axios"
 
-//TODO: find a way to make the default value of product not empty when the product list 
-//first appears.
-
 const UpdateProduct = ({ productApiRoute, customerApiRoute }) => {
 
     const [firstName, setFirstName] = useState('')

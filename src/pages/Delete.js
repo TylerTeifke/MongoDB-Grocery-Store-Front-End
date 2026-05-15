@@ -4,7 +4,9 @@ import Page from "./Page";
 const Delete = () => {
     let text = "Select an entry type you want to delete"
     const buttons = [
-        { id: 1, page: "/", message: "Back"}
+        { id: 1, page: "/DeleteEmployee", message: "Employee" },
+        { id: 2, page: "/DeleteCustomer", message: "Customer" },
+        { id: 3, page: "/", message: "Back" }
     ]
 
     return (
